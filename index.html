@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="theme-color" content="#0b0d10">
+<title>Fit30 居家訓練</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">Fit<span>30</span></div>
+  <div class="top-right">
+    <span class="chip" id="dayChip">第 1 天</span>
+    <button class="icon-btn" id="btnMe" aria-label="我的">☰</button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- 今日 -->
+  <section class="view on" id="view-home">
+    <div class="hero">
+      <div class="hero-day"><span id="heroNum">1</span><small>/ 30 天</small></div>
+      <h1 id="heroTitle">今天，動起來</h1>
+      <p class="hero-sub" id="heroSub">5 個動作 · 3 輪 · 約 12 分鐘</p>
+    </div>
+
+    <button class="cta" id="btnStart">開始訓練</button>
+
+    <div class="stats-row">
+      <div class="stat"><b id="stStreak">0</b><span>連續天數</span></div>
+      <div class="stat"><b id="stTotal">0</b><span>累計訓練</span></div>
+      <div class="stat"><b id="stMin">0</b><span>累計分鐘</span></div>
+    </div>
+
+    <h2 class="sec-title">今日課表</h2>
+    <ul class="move-list" id="homeMoves"></ul>
+
+    <div class="tip" id="homeTip">姿勢優先於速度：動作做滿，寧慢不亂。</div>
+  </section>
+
+  <!-- 訓練中 -->
+  <section class="view" id="view-train">
+    <div class="train-head">
+      <span id="trRound">第 1 / 3 輪</span>
+      <span id="trStep">1 / 5</span>
+    </div>
+
+    <div class="ring-wrap">
+      <svg class="ring" viewBox="0 0 240 240" aria-hidden="true">
+        <circle class="ring-bg" cx="120" cy="120" r="104"></circle>
+        <circle class="ring-fg" id="ringFg" cx="120" cy="120" r="104"></circle>
+      </svg>
+      <div class="ring-mid">
+        <div class="clock" id="trClock">0:30</div>
+        <div class="phase" id="trPhase">準備</div>
+      </div>
+    </div>
+
+    <h2 class="move-name" id="trName">開合跳</h2>
+    <p class="move-hint" id="trHint">肩膀放鬆，膝蓋微彎</p>
+
+    <div class="train-actions">
+      <button class="ghost" id="btnSkip">跳過</button>
+      <button class="solid" id="btnPause">暫停</button>
+    </div>
+
+    <ul class="upnext" id="upNext"></ul>
+    <button class="link-btn" id="btnQuit">結束這回合</button>
+  </section>
+
+  <!-- 完成 -->
+  <section class="view" id="view-done">
+    <div class="done-badge">✓</div>
+    <h2 class="done-title">完成了</h2>
+    <p class="done-sub" id="doneSub">第 1 天 · 12 分鐘 · 5 個動作</p>
+    <div class="done-cards">
+      <div class="done-card"><b id="doneStreak">1</b><span>連續天數</span></div>
+      <div class="done-card"><b id="doneTotal">1</b><span>累計訓練</span></div>
+    </div>
+    <button class="cta" id="btnHome">回首頁</button>
+  </section>
+
+  <!-- 紀錄 -->
+  <section class="view" id="view-log">
+    <h2 class="sec-title">訓練紀錄</h2>
+    <div class="cal" id="cal"></div>
+    <h2 class="sec-title">最近</h2>
+    <ul class="log-list" id="logList"></ul>
+  </section>
+
+  <!-- 我的 -->
+  <section class="view" id="view-me">
+    <h2 class="sec-title">我的</h2>
+    <div class="me-card">
+      <div class="me-row"><span>開始日</span><b id="meStart">—</b></div>
+      <div class="me-row"><span>目前進度</span><b id="meDay">第 1 天</b></div>
+      <div class="me-row"><span>訂閱狀態</span><b id="mePlan">免費體驗</b></div>
+    </div>
+
+    <div class="me-card">
+      <div class="me-row"><span>每日提醒</span><button class="switch" id="swRemind" aria-pressed="false"></button></div>
+      <div class="me-row"><span>語音提示</span><button class="switch on" id="swVoice" aria-pressed="true"></button></div>
+      <div class="me-row"><span>音效</span><button class="switch on" id="swBeep" aria-pressed="true"></button></div>
+    </div>
+
+    <div class="me-card">
+      <button class="wide-btn" id="btnExport">匯出紀錄（JSON）</button>
+      <button class="wide-btn" id="btnRestart">重新開始 30 天</button>
+    </div>
+
+    <p class="fine">Fit30 v1.0 · 資料只存在這台手機，不會上傳。</p>
+  </section>
+</main>
+
+<nav class="tabbar" id="tabbar">
+  <button class="tab on" data-tab="home"><i>◎</i><span>今日</span></button>
+  <button class="tab" data-tab="log"><i>▤</i><span>紀錄</span></button>
+  <button class="tab" data-tab="me"><i>☰</i><span>我的</span></button>
+</nav>
+
+<!-- 付費牆 -->
+<div class="sheet" id="paywall" hidden>
+  <div class="sheet-in">
+    <h2>免費體驗 7 天已結束</h2>
+    <p>解鎖完整 30 天課表、紀錄統計與每日提醒。</p>
+    <ul class="pw-list">
+      <li>30 天漸進課表（每天 10–15 分鐘）</li>
+      <li>自動計時、語音提示、休息倒數</li>
+      <li>連續天數與訓練紀錄</li>
+    </ul>
+    <button class="cta" id="btnSubscribe">訂閱完整版 · NT$120/月</button>
+    <button class="link-btn" id="btnUnlockDemo">先用示範解鎖（測試用）</button>
+    <button class="link-btn dim" id="btnClosePw">稍後再說</button>
+  </div>
+</div>
+
+<script src="plan.js?v=1"></script>
+<script src="app.js?v=1"></script>
+</body>
+</html>
